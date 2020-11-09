@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Lofi Pomodoro</title>
+  <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
+</head>
+<body>
+<div id="container" x-data="data()">
+
+<h1>Lofi Pomodor App</h1>
+<p>Pomodoro counter with lofi music audio and video</p>
+
+<label for="timer-display">Timer:</label> <div id="timer-display" x-text="displayTimer()"></div>
+<label for="stage-display">Stage:</label> <div id="stage-display" x-text="stage"></div>
+<label for="round-display">Round:</label> <div id="round-display" x-text="round"></div>
+<button id="btn-start" @click="startTimer()" x-text="timer_action">Start</button>
+<button id="btn-reset" @click="resetTimer()" x-bind:disabled="timer_action == 'Start'">Reset</button>
+
+</div>
+<script>
+function data() {
+  return { 
+    timer: 1500,
+    stage: 'Pomodoro',
+    round: 0,
+    end_time: 0,
+    counter: null,
+    timer_action: 'Start',
+
+    displayTimer() {
+      return Math.floor(this.timer/60) + ':' + this.timer%60;
+    },
+    updateTimer() {
+      var cur_time = new Date().getTime();
+      this.timer = Math.floor((this.end_time - cur_time)/1000);
+
+      if (this.timer <= 0) {
+        clearInterval(this.counter);
+
+        if (this.stage == 'Podomoro') {
+          this.stage = 'Break';
+          this.timer = 300;
+          this.startTimer();
+        } else {
+          this.stage = 'Podomoro';
+          this.timer = 1500;
+          this.round++;
+          this.startTimer();
+        }
+      }
+    },
+    startTimer() {
+      if (this.timer_action == 'Start') {
+        this.end_time = new Date().getTime() + this.timer*1000;
+        this.counter = setInterval(() => {this.updateTimer();}, 1000);
+        this.timer_action = 'Pause'
+      } else if (this.timer_action == 'Pause') {
+        clearInterval(this.counter);
+        this.timer_action = 'Resume'
+      } else {
+        this.end_time = new Date().getTime() + this.timer*1000;
+        this.counter = setInterval(() => {this.updateTimer();}, 1000);
+        this.timer_action = 'Pause'
+      }
+    },
+    resetTimer() {
+      if (this.timer_action != 'Resume') {
+        clearInterval(this.counter);
+      }
+      this.timer = 1500;
+      this.round = 0;
+      this.stage = 'Pomodoro';
+      this.timer_action = 'Start'
+    },
+  };
+}
+</script>
+</body>
+</html>
