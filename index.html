@@ -48,6 +48,7 @@ function notify(msg) {
 
   // At last, if the user has denied notifications, and you
   // want to be respectful there is no need to bother them any more.
+alert('sorry, but this app require notification capabilities enabled. please enable first before using');
 }
 
 function data() {
@@ -63,6 +64,15 @@ function data() {
 
     init() {
       this.timer = this.pomodoro_duration;
+      if (Notification.permission === "denied") {
+alert('sorry, but this app require notification capabilities enabled. please enable first before using');
+      } else if (Notification.permission !== "granted") {
+	    Notification.requestPermission().then(function (permission) {
+	      if (permission != "granted") {
+alert('sorry, but this app require notification capabilities enabled. please enable first before using');
+	      }
+	    });
+	}
     },
     displayTimer() {
       return Math.floor(this.timer/60) + ':' + this.timer%60;
