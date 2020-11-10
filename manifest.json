@@ -1,0 +1,19 @@
+
+{ 
+    "name":"PomoTube", 
+    "short_name":"PomoTube", 
+    "start_url":"index.html", 
+    "display":"standalone", 
+    "background_color":"#5900b3", 
+    "theme_color":"black", 
+    "scope": ".", 
+    "description":"Pomodoro timer that play youtube vid", 
+    "icons":[ 
+    { 
+    "src":"icon.svg",                       
+    "sizes":"192x192", 
+    "type":"image/svg"
+    }
+  ] 
+}
+
