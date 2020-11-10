@@ -25,22 +25,20 @@
 <body>
 <div id="container" x-data="data()" x-init="init()">
 
-<h1>Lofi Pomodor App</h1>
-<p>Pomodoro counter with lofi music audio and video</p>
-
 <label for="timer-display">Timer:</label> <span id="timer-display" x-text="displayTimer()"></span>
 <label for="stage-display">Stage:</label> <span id="stage-display" x-text="stage"></span>
 <label for="round-display">Round:</label> <span id="round-display" x-text="round"></span>
 <button id="btn-start" @click="toggleTimer()" x-text="timer_action">Start</button>
 <button id="btn-reset" @click="resetTimer()" x-bind:disabled="timer_action == 'Start'">Reset</button>
 
-<textarea id="url_list" x-model="url_list">https://youtube.com/watch?v=2KGtXzIb8l8</textarea>
 <iframe id="existing-iframe-example"
-        width="640" height="360"
-        src="https://www.youtube.com/embed/M7lc1UVf-VE?enablejsapi=1"
+        width="100%" height="90vh"
+        src="https://www.youtube.com/embed/2KGtXzIb8l8?enablejsapi=1"
         frameborder="0"
         style="border: solid 4px #37474F"
 ></iframe>
+<label for="url_list">youtube video id</label>
+<textarea id="url_list" x-model="url_list">2KGtXzIb8l8</textarea>
 
 </div>
 <script>
@@ -53,10 +51,7 @@ firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
 var player;
 function onYouTubeIframeAPIReady() {
-player = new YT.Player('existing-iframe-example', {
-events: {
-}
-});
+player = new YT.Player('existing-iframe-example');
 }
 
 function notify(msg) {
@@ -140,7 +135,7 @@ alert('sorry, but this app require notification capabilities enabled. please ena
     },
     toggleTimer() {
       if (this.timer_action == 'Start') {
-	      player.loadVideoByUrl(this.url_list);
+	      player.loadVideoById(this.url_list);
       }
       if (this.timer_action == 'Pause') {
         clearInterval(this.counter);
