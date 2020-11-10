@@ -55,7 +55,7 @@
   transition: all 0.5s;
   cursor: pointer;
 }
-#timer-bar button:hover {
+#timer-bar button:hover, #timer-bar button:disabled {
   background-color: #00aaaa;
 }
 
@@ -77,7 +77,7 @@
       x-html="(timer_action == 'Start' || timer_action == 'Resume') ? start_text : pause_text">
     </button>
     <button id="btn-reset" @click="resetTimer()" x-bind:disabled="timer_action == 'Start'">
-      <img src="./images/reload.svg" alt="">
+      <img src="./images/reset.svg" alt="">
     </button>
   </div>
 </div>
