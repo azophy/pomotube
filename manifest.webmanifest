@@ -1,12 +1,12 @@
 { 
-    "name":"PomoTube", 
-    "short_name":"PomoTube", 
+    "name":"FlowTube", 
+    "short_name":"FlowTube", 
     "start_url":"index.html", 
     "display":"standalone", 
     "background_color":"#5900b3", 
     "theme_color":"black", 
     "scope": ".", 
-    "description":"Pomodoro timer that play youtube vid", 
+    "description":"Simple pomodoro based timer with youtube player ", 
     "icons":[ 
       { 
         "src":"images/icon-192.png",                       

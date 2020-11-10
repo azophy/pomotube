@@ -7,7 +7,8 @@
                  initial-scale=1"> 
   <meta http-equiv="X-UA-Compatible"
  
-  <title>Lofi Pomodoro</title>
+  <title>FlowTube | Get in the flow</title>
+  <meta name="description" content="Simple pomodoro based timer with youtube player">
 
   <link rel="icon" href="./images/logo-192.png">
   <!-- Meta Tags requred for 
@@ -125,7 +126,7 @@ function data() {
     pomodoro_duration: 25*60,
     break_duration: 5*60,
     timer: 0,
-    stage: 'Pomodoro',
+    stage: 'Flow',
     round: 1,
     end_time: 0,
     counter: null,
@@ -155,11 +156,11 @@ function data() {
         this.toggleTimer();
         notify('stage ' + this.stage + ' round ' + this.round +' done');
 
-        if (this.stage == 'Pomodoro') {
+        if (this.stage == 'Flow') {
           this.stage = 'Break';
           this.timer = this.break_duration;
         } else {
-          this.stage = 'Pomodoro';
+          this.stage = 'Flow';
           this.timer = this.pomodoro_duration;
           this.round++;
         }
@@ -188,7 +189,7 @@ function data() {
       }
       this.timer = this.pomodoro_duration;
       this.round = 1;
-      this.stage = 'Pomodoro';
+      this.stage = 'Flow';
       this.timer_action = 'Start'
     },
   };

@@ -1,7 +1,7 @@
-Lofi-Pomodoro
-=============
+FlowTube
+========
 
-Simple web-based pomodor timer which plays lofi audio and/or video from youtube/soundcloud
+Simple pomodoro based timer with youtube player 
 
 Powered by [AlpineJS](https://github.com/alpinejs/alpine/)
 
