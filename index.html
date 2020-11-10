@@ -54,8 +54,8 @@
         frameborder="0"
         style="width:100%;height:98vh"
 ></iframe>
-<label for="url_list">youtube video id</label>
-<textarea id="url_list" x-model="url_list">2KGtXzIb8l8</textarea>
+<label for="url_list">youtube video/playlist url</label>
+<input type="text" id="url_list" x-model="url_list"/>
 
 </div>
 <script>
@@ -131,7 +131,7 @@ function data() {
     end_time: 0,
     counter: null,
     timer_action: 'Start',
-    url_list: null,
+    url_list: 'https://www.youtube.com/?v=2KGtXzIb8l8',
 
     init() {
       this.timer = this.pomodoro_duration;
@@ -170,7 +170,22 @@ function data() {
     },
     toggleTimer() {
       if (this.timer_action == 'Start') {
-	      player.loadVideoById(this.url_list.trim());
+        var url = this.url_list.trim();
+        var params = new URL(url).searchParams;
+
+        //playlist
+        if (url.indexOf('playlist') != -1) { 
+          player.loadPlaylist({
+            listType:'playlist',
+            list: params.get('list'),
+          })
+        }
+
+        //video
+        else { 
+          // player.loadVideoByUrl(this.url_list.trim());
+          player.loadVideoById(params.get('v'));
+        }
       }
       if (this.timer_action == 'Pause') {
         clearInterval(this.counter);
