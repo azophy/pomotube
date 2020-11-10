@@ -20,22 +20,37 @@
   <link rel="manifest"
         href="manifest.json"> 
 
+<style>
+#timer-bar {
+	position: fixed;
+	top: 0;
+	width: 400px;
+	text-align: center;
+	background: #fff;
+}
+
+#timer-bar > label {
+	display: none;
+}
+</style>
+
   <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
 </head>
 <body>
 <div id="container" x-data="data()" x-init="init()">
 
-<label for="timer-display">Timer:</label> <span id="timer-display" x-text="displayTimer()"></span>
-<label for="stage-display">Stage:</label> <span id="stage-display" x-text="stage"></span>
-<label for="round-display">Round:</label> <span id="round-display" x-text="round"></span>
-<button id="btn-start" @click="toggleTimer()" x-text="timer_action">Start</button>
-<button id="btn-reset" @click="resetTimer()" x-bind:disabled="timer_action == 'Start'">Reset</button>
+<div id="timer-bar">
+	<label for="stage-display">Stage:</label> <span id="stage-display" x-text="stage"></span>
+	<label for="round-display">Round:</label> <span id="round-display" x-text="'('+round+')'"></span>
+	<label for="timer-display">Timer:</label> <span id="timer-display" x-text="displayTimer()"></span>
+	<button id="btn-start" @click="toggleTimer()" x-text="timer_action">Start</button>
+	<button id="btn-reset" @click="resetTimer()" x-bind:disabled="timer_action == 'Start'">Reset</button>
+</div>
 
 <iframe id="existing-iframe-example"
-        width="100%" height="90vh"
         src="https://www.youtube.com/embed/2KGtXzIb8l8?enablejsapi=1"
         frameborder="0"
-        style="border: solid 4px #37474F"
+        style="width:100%;height:98vh"
 ></iframe>
 <label for="url_list">youtube video id</label>
 <textarea id="url_list" x-model="url_list">2KGtXzIb8l8</textarea>
@@ -135,7 +150,7 @@ alert('sorry, but this app require notification capabilities enabled. please ena
     },
     toggleTimer() {
       if (this.timer_action == 'Start') {
-	      player.loadVideoById(this.url_list);
+	      player.loadVideoById(this.url_list.trim());
       }
       if (this.timer_action == 'Pause') {
         clearInterval(this.counter);
@@ -143,7 +158,7 @@ alert('sorry, but this app require notification capabilities enabled. please ena
 	player.pauseVideo();
       } else {
         this.end_time = new Date().getTime() + this.timer*1000;
-        this.counter = setInterval(() => {this.updateTimer();}, 1000);
+        this.counter = setInterval(() => {this.updateTimer();}, 100);
         this.timer_action = 'Pause'
 	player.playVideo();
       }
