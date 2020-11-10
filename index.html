@@ -25,15 +25,42 @@
 <style>
 #timer-bar {
 	position: fixed;
-	top: 0;
-	width: 400px;
+	top: -5px;
+	width: 100%;
 	text-align: center;
-	background: #fff;
+  font-weight: bold;
+  color: #fff;
 }
 
-#timer-bar > label {
-	display: none;
+#timer-bar > .wrapper {
+  margin:auto;
+  display: inline-block;
+	background: teal;
+  padding:5px;
+  border-radius: 5px;
 }
+
+#timer-bar label { display: none; }
+#timer-bar button {
+  display: inline-block;
+  background-color: #007070;
+  border-radius: 10px;
+  border: 4px single #cccccc;
+  color: #eeeeee;
+  text-align: center;
+  padding: 3px;
+  -webkit-transition: all 0.5s;
+  -moz-transition: all 0.5s;
+  -o-transition: all 0.5s;
+  transition: all 0.5s;
+  cursor: pointer;
+}
+#timer-bar button:hover {
+  background-color: #00aaaa;
+}
+
+#round-display:before { content: '('; }
+#round-display:after { content: ')'; }
 </style>
 
   <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
@@ -42,11 +69,17 @@
 <div id="container" x-data="data()" x-init="init()">
 
 <div id="timer-bar">
-	<label for="stage-display">Stage:</label> <span id="stage-display" x-text="stage"></span>
-	<label for="round-display">Round:</label> <span id="round-display" x-text="'('+round+')'"></span>
-	<label for="timer-display">Timer:</label> <span id="timer-display" x-text="displayTimer()"></span>
-	<button id="btn-start" @click="toggleTimer()" x-text="timer_action">Start</button>
-	<button id="btn-reset" @click="resetTimer()" x-bind:disabled="timer_action == 'Start'">Reset</button>
+  <div class="wrapper">
+    <label for="stage-display">Stage:</label> <span id="stage-display" x-text="stage"></span>
+    <label for="round-display">Round:</label> <span id="round-display" x-text="round"></span>
+    <label for="timer-display">Timer:</label> <span id="timer-display" x-text="displayTimer()"></span>
+    <button id="btn-start" @click="toggleTimer()" 
+      x-html="(timer_action == 'Start' || timer_action == 'Resume') ? start_text : pause_text">
+    </button>
+    <button id="btn-reset" @click="resetTimer()" x-bind:disabled="timer_action == 'Start'">
+      <img src="./images/reload.svg" alt="">
+    </button>
+  </div>
 </div>
 
 <iframe id="existing-iframe-example"
@@ -132,6 +165,8 @@ function data() {
     counter: null,
     timer_action: 'Start',
     url_list: 'https://www.youtube.com/?v=2KGtXzIb8l8',
+    start_text: '<img src="./images/play.svg" alt="">',
+    pause_text: '<img src="./images/pause.svg" alt="">',
 
     init() {
       this.timer = this.pomodoro_duration;
