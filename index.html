@@ -5,7 +5,7 @@
   <meta name="viewport" 
         content="width=device-width, 
                  initial-scale=1"> 
-  <meta http-equiv="X-UA-Compatible"
+  <meta http-equiv="X-UA-Compatible">
  
   <title>FlowTube | Get in the flow</title>
   <meta name="description" content="Simple pomodoro based timer with youtube player">
@@ -23,6 +23,7 @@
   <link rel="manifest" href="/manifest.webmanifest"> 
 
 <style>
+.show-md { display: none; }
 #timer-bar {
 	position: fixed;
 	top: -5px;
@@ -61,12 +62,42 @@
 
 #round-display:before { content: '('; }
 #round-display:after { content: ')'; }
+
+#player-frame {
+  width:100%;
+  height:90vh;
+}
+
+@media (min-width: 600px) {
+  .show-md { display: block; }
+  #header { 
+    text-align: center;
+  }
+  #timer-bar {
+    position: relative;
+  }
+  #timer-bar label {
+    display: inline-block;
+  }
+  #round-display:before { content: ''; }
+  #round-display:after { content: ''; }
+  #container {
+    max-width: 800px;
+    margin: auto;
+    padding: 20px;
+  }
+}
 </style>
 
   <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
 </head>
 <body>
 <div id="container" x-data="data()" x-init="init()">
+
+<div id="header" class="show-md">
+  <h1>FlowTube</h1>
+  <h2>Get in the flow</h2>
+</div>
 
 <div id="timer-bar">
   <div class="wrapper">
@@ -82,13 +113,16 @@
   </div>
 </div>
 
-<iframe id="existing-iframe-example"
+<iframe id="player-frame"
         src="https://www.youtube.com/embed/2KGtXzIb8l8?enablejsapi=1"
         frameborder="0"
-        style="width:100%;height:98vh"
+        style=""
 ></iframe>
-<label for="url_list">youtube video/playlist url</label>
-<input type="text" id="url_list" x-model="url_list"/>
+
+<div id="options" class="show-md">
+  <label for="url_list">youtube video/playlist url</label>
+  <input type="text" id="url_list" x-model="url_list" size="30"/>
+</div>
 
 </div>
 <script>
@@ -119,7 +153,7 @@ firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
 var player;
 function onYouTubeIframeAPIReady() {
-  player = new YT.Player('existing-iframe-example');
+  player = new YT.Player('player-frame');
 }
 
 function notify(msg) {
