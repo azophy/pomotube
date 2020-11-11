@@ -154,8 +154,8 @@
 
 <div id="options" class="show-md modal">
   <div class="modal-content">
-    <label for="url_list">youtube video/playlist url</label>
-    <input type="text" id="url_list" x-model="url_list" width="60%"/>
+    <label for="video_url">youtube video/playlist url</label>
+    <input type="text" id="video_url" x-model="video_url" width="60%"/>
     <button class="hide-md" onclick="toggleModal()">Close</button>
   </div>
 </div>
@@ -246,21 +246,26 @@ function data() {
     end_time: 0,
     counter: null,
     timer_action: 'Start',
-    url_list: 'https://www.youtube.com/?v=2KGtXzIb8l8',
+    video_url: 'https://www.youtube.com/?v=2KGtXzIb8l8',
     start_text: '<img src="./images/play.svg" alt="">',
     pause_text: '<img src="./images/pause.svg" alt="">',
 
     init() {
       this.timer = this.pomodoro_duration;
+
       if (Notification.permission === "denied") {
         alert('sorry, but this app require notification capabilities enabled. please enable first before using');
       } else if (Notification.permission !== "granted") {
-	    Notification.requestPermission().then(function (permission) {
-	      if (permission != "granted") {
-          alert('sorry, but this app require notification capabilities enabled. please enable first before using');
-	      }
-	    });
-	}
+        Notification.requestPermission().then(function (permission) {
+          if (permission != "granted") {
+            alert('sorry, but this app require notification capabilities enabled. please enable first before using');
+          }
+        });
+	    }
+
+      if (window.localStorage.getItem('video_url')) {
+        this.video_url = window.localStorage.getItem('video_url');
+      }
     },
     displayTimer() {
       return Math.floor(this.timer/60) + ':' + this.timer%60;
@@ -287,7 +292,8 @@ function data() {
     },
     toggleTimer() {
       if (this.timer_action == 'Start') {
-        var url = this.url_list.trim();
+        var url = this.video_url.trim();
+        window.localStorage.setItem('video_url', url);
         var params = new URL(url).searchParams;
 
         //playlist
@@ -300,7 +306,7 @@ function data() {
 
         //video
         else { 
-          // player.loadVideoByUrl(this.url_list.trim());
+          // player.loadVideoByUrl(this.video_url.trim());
           player.loadVideoById(params.get('v'));
         }
       }
