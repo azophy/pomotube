@@ -4,10 +4,11 @@ FlowTube
 Simple pomodoro based timer with youtube player 
 
 Powered by [AlpineJS](https://github.com/alpinejs/alpine/)
-Icons by Font Awesome
+Icons by [Font Awesome](https://fontawesome.com)
+Notification sound by [NotificationSounds.com](https://notificationsounds.com)
 
 ## Todo
-- [ ] pause youtube on break
+- [x] pause youtube on break
 - [ ] service worker notify on update available
 - [ ] basic youtube suggestion list
 - [ ] video history?
