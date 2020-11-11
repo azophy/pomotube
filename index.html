@@ -216,9 +216,9 @@ function onYouTubeIframeAPIReady() {
 }
 
 function notify(msg) {
-    // script taken from https://stackoverflow.com/a/23395136
-    var snd = new Audio("./sounds/eventually.ogg");  
-    snd.play();
+  // script taken from https://stackoverflow.com/a/23395136
+  var snd = new Audio("./sounds/eventually.ogg");  
+  snd.play();
 
   // script taken from https://developer.mozilla.org/en-US/docs/Web/API/notification
   // Let's check if the browser supports notifications
@@ -244,7 +244,9 @@ function notify(msg) {
 
   // At last, if the user has denied notifications, and you
   // want to be respectful there is no need to bother them any more.
-  alert('sorry, but this app require notification capabilities enabled. please enable first before using');
+  else {
+    alert('sorry, but this app require notification capabilities enabled. please enable first before using');
+  }
 }
 
 function toggleModal() {
