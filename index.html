@@ -25,37 +25,40 @@
 <style>
 .show-md { display: none; }
 .hide-md { display: inline-block; }
+#container { width:100%; }
 #timer-bar {
-	position: fixed;
-	top: -5px;
 	width: 100%;
 	text-align: center;
   font-weight: bold;
   color: #fff;
+	background: teal;
 }
 
 #timer-bar > .wrapper {
   margin:auto;
   display: inline-block;
-	background: teal;
-  padding:5px;
-  border-radius: 5px;
+}
+
+#timer-bar span {
+  padding:5px 2px 5px 5px;
+  margin:0;
 }
 
 #timer-bar label { display: none; }
 #timer-bar button {
   display: inline-block;
   background-color: #007070;
-  border-radius: 10px;
-  border: 4px single #cccccc;
+  border: none;
+  height:100%;
   color: #eeeeee;
   text-align: center;
-  padding: 3px;
+  padding: 5px;
   -webkit-transition: all 0.5s;
   -moz-transition: all 0.5s;
   -o-transition: all 0.5s;
   transition: all 0.5s;
   cursor: pointer;
+  margin:0;
 }
 #timer-bar button:hover, #timer-bar button:disabled {
   background-color: #00aaaa;
@@ -66,12 +69,25 @@
 
 #player-frame {
   width:100%;
-  height:90vh;
+  height:400px;
 }
 
 .github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}
 
 @media (max-width: 600px) {
+
+  #timer-bar span { border-left: 2px solid #fff; }
+  #timer-bar button { border-left: 2px solid #fff; }
+
+  #player-area { 
+    height:93vh; 
+    display: flex;
+    flex-flow: column;
+  }
+  #player-frame { 
+    flex: 1 1 auto;
+  }
+
   /* taken from https://www.w3schools.com/howto/howto_css_modals.asp */
   .modal {
     position: fixed; /* Stay in place */
@@ -129,28 +145,30 @@
   <h2>Productivity timer (inspired by Pomodoro) with youtube player</h2>
 </div>
 
-<div id="timer-bar">
-  <div class="wrapper">
-    <label for="stage-display">Stage:</label> <span id="stage-display" x-text="stage"></span>
-    <label for="round-display">Round:</label> <span id="round-display" x-text="round"></span>
-    <label for="timer-display">Timer:</label> <span id="timer-display" x-text="displayTimer()"></span>
-    <button id="btn-start" @click="toggleTimer()" 
-      x-html="(timer_action == 'Start' || timer_action == 'Resume') ? start_text : pause_text">
-    </button>
-    <button id="btn-reset" @click="resetTimer()" x-bind:disabled="timer_action == 'Start'">
-      <img src="./images/reset.svg" alt="">
-    </button>
-    <button class="hide-md" id="btn-setting" @click="toggleModal()">
-      <img src="./images/gear.svg" alt="">
-    </button>
+<div id="player-area">
+  <div id="timer-bar">
+    <div class="wrapper">
+      <label for="stage-display">Stage:</label> <span id="stage-display" x-text="stage"></span>
+      <label for="round-display">Round:</label> <span id="round-display" x-text="round"></span>
+      <label for="timer-display">Timer:</label> <span id="timer-display" x-text="displayTimer()"></span>
+      <button id="btn-start" @click="toggleTimer()" 
+        x-html="(timer_action == 'Start' || timer_action == 'Resume') ? start_text : pause_text">
+      </button>
+      <button id="btn-reset" @click="resetTimer()" x-bind:disabled="timer_action == 'Start'">
+        <img src="./images/reset.svg" alt="">
+      </button>
+      <button class="hide-md" id="btn-setting" @click="toggleModal()">
+        <img src="./images/gear.svg" alt="">
+      </button>
+    </div>
   </div>
-</div>
 
-<iframe id="player-frame"
-        src="https://www.youtube.com/embed/2KGtXzIb8l8?enablejsapi=1"
-        frameborder="0"
-        style=""
-></iframe>
+  <iframe id="player-frame"
+          src="https://www.youtube.com/embed/2KGtXzIb8l8?enablejsapi=1"
+          frameborder="0"
+          style=""
+  ></iframe>
+</div>
 
 <div id="options" class="show-md modal">
   <div class="modal-content">
@@ -246,7 +264,7 @@ function data() {
     end_time: 0,
     counter: null,
     timer_action: 'Start',
-    video_url: 'https://www.youtube.com/?v=2KGtXzIb8l8',
+    video_url: 'https://www.youtube.com/watch?v=5yx6BWlEVcY', //ChillHop caffee
     start_text: '<img src="./images/play.svg" alt="">',
     pause_text: '<img src="./images/pause.svg" alt="">',
 
@@ -268,7 +286,9 @@ function data() {
       }
     },
     displayTimer() {
-      return Math.floor(this.timer/60) + ':' + this.timer%60;
+      var mm = Math.floor(this.timer/60),
+          ss = this.timer%60;
+      return  ( mm < 10 ? '0':'') + mm + ':' + (ss < 10 ? '0' : '') + ss;
     },
     updateTimer() {
       var cur_time = new Date().getTime();
