@@ -164,9 +164,8 @@
   </div>
 
   <iframe id="player-frame"
-          src="https://www.youtube.com/embed/2KGtXzIb8l8?enablejsapi=1"
+          src="https://www.youtube.com/embed/?enablejsapi=1"
           frameborder="0"
-          style=""
   ></iframe>
 </div>
 
@@ -212,7 +211,39 @@ firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
 var player;
 function onYouTubeIframeAPIReady() {
-  player = new YT.Player('player-frame');
+  player = new YT.Player('player-frame', {
+    events: {
+      'onReady': function() {
+        var url = document.getElementById('video_url').value;
+        loadVideoByUrl(url);
+      },
+    }
+  });
+}
+
+function loadVideoByUrl(url) {
+  if (player == undefined) return false;
+
+  var params = new URL(url).searchParams;
+
+  //playlist
+  if (url.indexOf('playlist') != -1) { 
+    var playlist_id = params.get('list');
+    if (player.getPlaylistId() != playlist_id) {
+      player.loadPlaylist({
+        listType:'playlist',
+        list: playlist_id,
+      })
+    }
+  }
+
+  //video
+  else { 
+    var vid_id = params.get('v');
+    if (player.getVideoData().video_id != vid_id) {
+      player.loadVideoById(vid_id);
+    }
+  }
 }
 
 function notify(msg) {
@@ -286,6 +317,8 @@ function data() {
       if (window.localStorage.getItem('video_url')) {
         this.video_url = window.localStorage.getItem('video_url');
       }
+
+      loadVideoByUrl(this.video_url);
     },
     displayTimer() {
       var mm = Math.floor(this.timer/60),
@@ -316,21 +349,8 @@ function data() {
       if (this.timer_action == 'Start') {
         var url = this.video_url.trim();
         window.localStorage.setItem('video_url', url);
-        var params = new URL(url).searchParams;
 
-        //playlist
-        if (url.indexOf('playlist') != -1) { 
-          player.loadPlaylist({
-            listType:'playlist',
-            list: params.get('list'),
-          })
-        }
-
-        //video
-        else { 
-          // player.loadVideoByUrl(this.video_url.trim());
-          player.loadVideoById(params.get('v'));
-        }
+        loadVideoByUrl(url);
       }
       if (this.timer_action == 'Pause') {
         clearInterval(this.counter);
