@@ -3,7 +3,7 @@
     "short_name":"FlowTube", 
     "start_url":"index.html", 
     "display":"standalone", 
-    "background_color":"#5900b3", 
+    "background_color":"teal", 
     "theme_color":"teal", 
     "scope": ".", 
     "description":"Simple pomodoro based timer with youtube player ", 
