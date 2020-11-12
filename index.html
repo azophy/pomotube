@@ -22,6 +22,12 @@
   <!-- Manifest File link -->
   <link rel="manifest" href="./manifest.webmanifest"> 
 
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+        rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap" 
+        rel="stylesheet"> 
+
 <style>
 .show-md { display: none; }
 .hide-md { display: inline-block; }
@@ -32,27 +38,30 @@
   font-weight: bold;
   color: #fff;
 	background: teal;
+
+  font-family: 'Roboto', sans-serif;
 }
 
 #timer-bar > .wrapper {
   margin:auto;
   display: inline-block;
+  padding:3px;
 }
 
 #timer-bar span {
-  padding:5px 2px 5px 5px;
+  align-items: center;
   margin:0;
 }
 
 #timer-bar label { display: none; }
 #timer-bar button {
   display: inline-block;
-  background-color: #007070;
+  background-color: teal;
   border: none;
   height:100%;
   color: #eeeeee;
   text-align: center;
-  padding: 5px;
+  padding: 3px;
   -webkit-transition: all 0.5s;
   -moz-transition: all 0.5s;
   -o-transition: all 0.5s;
@@ -75,10 +84,6 @@
 .github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}
 
 @media (max-width: 600px) {
-
-  #timer-bar span { border-left: 2px solid #fff; }
-  #timer-bar button { border-left: 2px solid #fff; }
-
   #player-area { 
     height:93vh; 
     display: flex;
@@ -155,10 +160,10 @@
         x-html="(timer_action == 'Start' || timer_action == 'Resume') ? start_text : pause_text">
       </button>
       <button id="btn-reset" @click="resetTimer()" x-bind:disabled="timer_action == 'Start'">
-        <img src="./images/reset.svg" alt="">
+        <i class="material-icons">replay</i>
       </button>
       <button class="hide-md" id="btn-setting" @click="toggleModal()">
-        <img src="./images/gear.svg" alt="">
+        <i class="material-icons">settings</i>
       </button>
     </div>
   </div>
@@ -298,8 +303,8 @@ function data() {
     counter: null,
     timer_action: 'Start',
     video_url: 'https://www.youtube.com/watch?v=5yx6BWlEVcY', //ChillHop caffee
-    start_text: '<img src="./images/play.svg" alt="">',
-    pause_text: '<img src="./images/pause.svg" alt="">',
+    start_text: '<i class="material-icons">play_arrow</i>',
+    pause_text: '<i class="material-icons">pause</i>',
 
     init() {
       this.timer = this.pomodoro_duration;

@@ -4,7 +4,7 @@ FlowTube
 Simple pomodoro based timer with youtube player 
 
 Powered by [AlpineJS](https://github.com/alpinejs/alpine/)
-Icons by [Font Awesome](https://fontawesome.com)
+Icons by [Google's Material Icons](https://material.io/resources/icons/)
 Notification sound by [NotificationSounds.com](https://notificationsounds.com)
 
 ## Todo
@@ -12,7 +12,7 @@ Notification sound by [NotificationSounds.com](https://notificationsounds.com)
 - [ ] service worker notify on update available
 - [ ] basic youtube suggestion list
 - [ ] video history?
-- [ ] fix icon size for manifest
+- [x] fix icon size for manifest
 
 ## References
 - https://github.com/alpinejs/alpine/
