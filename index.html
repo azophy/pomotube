@@ -25,7 +25,7 @@
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
         rel="stylesheet">
   <link rel="preconnect" href="https://fonts.gstatic.com">
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap" 
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300:700&display=swap" 
         rel="stylesheet"> 
 
 <style>
@@ -34,6 +34,11 @@
 /* ====== DEFAULT SETTINGS (MOBILE & FULLSCREEN) ======= */
 #container {
   text-align: center;
+  font-family: 'Roboto', sans-serif;
+}
+
+#header h1 {
+  color: teal;
 }
 
 #timer-bar {
@@ -42,7 +47,6 @@
   font-weight: bold;
   color: #eeeeee;
 	background: teal;
-  font-family: 'Roboto', sans-serif;
 }
 #timer-bar > .wrapper {
   margin:auto;
@@ -131,6 +135,21 @@
   width: 80%; /* Could be more or less, depending on screen size */
 }
 
+/* The Close Button */
+.close {
+  color: #aaaaaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
+
 /* ===== NON-MOBILE SETTINGS ===== */
 @media (min-width: 600px) {
   #container {
@@ -139,6 +158,12 @@
     padding: 20px;
 	  text-align: center;
   }
+  #timer-bar label { 
+    display: inline-block; 
+    font-weight: normal;
+  }
+  #round-display:before { content: ''; }
+  #round-display:after { content: ''; }
   #player-area {
     height:60vh;
   }
@@ -154,7 +179,7 @@
 
 <div id="header" class="fullscreen-hide">
   <h1>FlowTube</h1>
-  <h2>Productivity timer (inspired by Pomodoro) with youtube player</h2>
+  <p>Productivity timer (inspired by Pomodoro) with youtube player</p>
 </div>
 
 <div id="player-area">
@@ -186,11 +211,12 @@
 
 <div id="options" class="fullscreen-hide modal">
   <div class="modal-content">
-    <label for="video_url">youtube video/playlist url</label>
-    <input type="text" id="video_url" x-model="video_url" width="60%"/>
-    <button class="non-fullscreen-hide" onclick="toggleModal()">
-      <i class="material-icons">close</i>
-    </button>
+    <i id="btn-close-modal" class="non-fullscreen-hide material-icons close" onclick="toggleModal()">close</i>
+
+    <p>
+      <label for="video_url">youtube video/playlist url</label>
+      <input type="text" id="video_url" x-model="video_url" width="60%"/>
+    </p>
   </div>
 </div>
 
