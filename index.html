@@ -284,10 +284,12 @@ function loadVideoByUrl(url) {
   else { 
     var vid_id = params.get('v');
     if (player.getVideoData().video_id != vid_id) {
-      player.loadVideoById(vid_id);
+      // load as playlist instead as single video so we could loop it
+      player.loadPlaylist(vid_id); 
     }
   }
 
+  player.setLoop(true); //set video loop
   // prevent auto play after load
   player.pauseVideo();
 }
