@@ -184,9 +184,9 @@
 <div id="player-area">
   <div id="timer-bar">
     <div class="wrapper">
-      <label for="stage-display">Stage:</label> <span id="stage-display" x-text="stage"></span>
-      <label for="round-display">Round:</label> <span id="round-display" x-text="round"></span>
-      <label for="timer-display">Timer:</label> <span id="timer-display" x-text="displayTimer()"></span>
+      <label for="stage-display">Session:</label> <span id="stage-display" x-text="stage" title="current session"></span>
+      <label for="round-display">Round:</label> <span id="round-display" x-text="round" title="current number of rounds"></span>
+      <label for="timer-display">Timer:</label> <span id="timer-display" x-text="displayTimer()" title="time left"></span>
       <button id="btn-start" @click="toggleTimer()" :title="timer_action"
         x-html="(timer_action == 'Start' || timer_action == 'Resume') ? start_text : pause_text">
       </button>
@@ -220,9 +220,22 @@
   </div>
 </div>
 
+<hr/>
+
+<div id="faq">
+  <strong>How to use this website?</strong>
+
+  <p>First prepare a youtube url you would like to play. You could use a single video or a playlist. The player would loop the video/playlist when it ends.</p>
+
+  <p>After that, you paste it on the input box under the video player. Then you could just click the 'Play' button to start your 'Flow' session'. The timer is set to 25 minutes of 'Flow' session and 5 minutes of 'Break' session, and would alternate each session one after another. You could pause or reset the timer anytime.</p>
+
+  <p>You could also turn the player into Fullscreen mode. In that mode, the player would fill the page, and left the timer toolbar above the player. If you wish to, you could also install this website as a PWA by clicking the 'Install this page' button on your browser's URL bar.</p>
+</div>
+
 <div id="footer" class="fullscreen-hide">
     <hr/>
-    Made by <a href="https://abdurrahman.adianto.id">Abdurrahman Shofy Adianto</a> , 2020. The website is released under <a href="https://www.gnu.org/licenses/#AGPL">GNU AGPLv3</a>. Star our <a href="https://github.com/flowtube/flowtube.github.io">Github</a> repo.
+    Made by <a href="https://abdurrahman.adianto.id">Abdurrahman Shofy Adianto</a> , 2020. Released under <a href="https://www.gnu.org/licenses/#AGPL">GNU AGPLv3</a>. <br/>
+      <iframe src="https://ghbtns.com/github-btn.html?user=flowtube&repo=flowtube.github.io&type=star&count=true&size=large" frameborder="0" scrolling="0" width="120" height="25" title="GitHub"></iframe>
 </div>
 
 </div>
