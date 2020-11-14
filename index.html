@@ -217,6 +217,8 @@
       <label for="video_url">youtube video/playlist url</label>
       <input type="text" id="video_url" x-model="video_url" width="60%"/>
     </p>
+
+    <button @click="loadVideoFromInput()">Apply</button>
   </div>
 </div>
 
@@ -295,7 +297,7 @@ function loadVideoByUrl(url) {
   //video
   else { 
     var vid_id = params.get('v');
-    if (player.getVideoData().video_id != vid_id) {
+    if (player.getPlaylistId() != vid_id) {
       // load as playlist instead as single video so we could loop it
       player.loadPlaylist(vid_id); 
     }
@@ -407,10 +409,7 @@ function data() {
     },
     toggleTimer() {
       if (this.timer_action == 'Start') {
-        var url = this.video_url.trim();
-        window.localStorage.setItem('video_url', url);
-
-        loadVideoByUrl(url);
+        this.loadVideoFromInput();
       }
       if (this.timer_action == 'Pause') {
         clearInterval(this.counter);
@@ -425,6 +424,8 @@ function data() {
       }
     },
     resetTimer() {
+      player.pauseVideo();
+
       if (this.timer_action != 'Resume') {
         clearInterval(this.counter);
       }
@@ -442,6 +443,13 @@ function data() {
         ? '<i class="material-icons">fullscreen_exit</i>' 
         : '<i class="material-icons">fullscreen</i>' 
       ;
+    },
+
+    loadVideoFromInput() {
+        var url = this.video_url.trim();
+        window.localStorage.setItem('video_url', url);
+
+        loadVideoByUrl(url);
     },
   };
 }
