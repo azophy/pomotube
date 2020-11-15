@@ -7,7 +7,7 @@
                  initial-scale=1"> 
   <meta http-equiv="X-UA-Compatible">
  
-  <title>FlowTube | Productivity timer with youtube player</title>
+  <title>PomoTube | Productivity timer with youtube player</title>
   <meta name="description" content="Simple pomodoro based timer with youtube player">
 
   <link rel="icon" href="./images/logo-192.png">
@@ -193,11 +193,11 @@
 <body>
 <div id="container" x-data="data()" x-init="init()" x-ref="container">
 
-<a href="https://github.com/flowtube/flowtube.github.io" class="github-corner fullscreen-hide" aria-label="View source on GitHub" target="_blank" rel="noopener"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#151513; color:#fff; position: fixed; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+<a href="https://github.com/pomotube/pomotube.github.io" class="github-corner fullscreen-hide" aria-label="View source on GitHub" target="_blank" rel="noopener"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#151513; color:#fff; position: fixed; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
 
 <div id="header" class="fullscreen-hide">
-  <h1>FlowTube</h1>
-  <p>Productivity timer (inspired by Pomodoro) with youtube player</p>
+  <h1>PomoTube</h1>
+  <p>Pomodoro timer with youtube player</p>
 </div>
 
 <div id="player-area">
@@ -235,6 +235,7 @@
     <p>
       <label for="video_url">youtube video/playlist url</label>
       <input type="text" id="video_url" x-model="video_url" width="60%"/>
+      <button @click="loadVideoFromInput()">Apply</button>
     </p>
 
     <strong>
@@ -247,10 +248,6 @@
           ></div>
       </template>
     </div>
-
-    <p>
-      <button @click="loadVideoFromInput()">Apply</button>
-    </p>
   </div>
 </div>
 
@@ -260,7 +257,7 @@
 
   <p>First prepare a youtube url you would like to play. You could use a single video or a playlist. The player would loop the video/playlist when it ends.</p>
 
-  <p>After that, you paste it on the input box under the video player. Then you could just click the 'Play' button to start your 'Flow' session'. The timer is set to 25 minutes of 'Flow' session and 5 minutes of 'Break' session, and would alternate each session one after another. You could pause or reset the timer anytime.</p>
+  <p>After that, you paste it on the input box under the video player. Then you could just click the 'Play' button to start your 'Focus' session'. The timer is set to 25 minutes of 'Focus' session and 5 minutes of 'Break' session, and would alternate each session one after another. You could pause or reset the timer anytime.</p>
 
   <p>You could also turn the player into Fullscreen mode. In that mode, the player would fill the page, and left the timer toolbar above the player. If you wish to, you could also install this website as a PWA by clicking the 'Install this page' button on your browser's URL bar.</p>
 </div>
@@ -268,7 +265,7 @@
 <div id="footer" class="fullscreen-hide">
     <hr/>
     Made by <a href="https://abdurrahman.adianto.id">Abdurrahman Shofy Adianto</a> , 2020. Released under <a href="https://www.gnu.org/licenses/#AGPL">GNU AGPLv3</a>. <br/>
-      <iframe src="https://ghbtns.com/github-btn.html?user=flowtube&repo=flowtube.github.io&type=star&count=true&size=large" frameborder="0" scrolling="0" width="120" height="25" title="GitHub"></iframe>
+      <iframe src="https://ghbtns.com/github-btn.html?user=pomotube&repo=pomotube.github.io&type=star&count=true&size=large" frameborder="0" scrolling="0" width="120" height="25" title="GitHub"></iframe>
 </div>
 
 </div>
@@ -407,7 +404,7 @@ function data() {
     pomodoro_duration: 25*60,
     break_duration: 5*60,
     timer: 0,
-    stage: 'Flow',
+    stage: 'Focus',
     round: 1,
     end_time: 0,
     counter: null,
@@ -450,11 +447,11 @@ function data() {
         this.toggleTimer();
         notify('stage ' + this.stage + ' round ' + this.round +' done');
 
-        if (this.stage == 'Flow') {
+        if (this.stage == 'Focus') {
           this.stage = 'Break';
           this.timer = this.break_duration;
         } else {
-          this.stage = 'Flow';
+          this.stage = 'Focus';
           this.timer = this.pomodoro_duration;
           this.round++;
         }
@@ -471,7 +468,7 @@ function data() {
         this.end_time = new Date().getTime() + this.timer*1000;
         this.counter = setInterval(() => {this.updateTimer();}, 100);
         this.timer_action = 'Pause'
-        if (this.stage == "Flow") {
+        if (this.stage == "Focus") {
           player.playVideo();
         }
       }
@@ -484,7 +481,7 @@ function data() {
       }
       this.timer = this.pomodoro_duration;
       this.round = 1;
-      this.stage = 'Flow';
+      this.stage = 'Focus';
       this.timer_action = 'Start'
     },
 
@@ -502,7 +499,7 @@ function data() {
         var url = this.video_url.trim();
         window.localStorage.setItem('video_url', url);
 
-        var autoplay = (this.stage == "Flow" && this.timer_action == "Pause");
+        var autoplay = (this.stage == "Focus" && this.timer_action == "Pause");
         loadVideoByUrl(url, autoplay);
 
         // remove previous value from history
