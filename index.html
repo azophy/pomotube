@@ -239,10 +239,8 @@
       <button @click="loadVideoFromInput()">Apply</button>
     </p>
 
-    <strong>
-      Video history:
-    </strong>
-    <div id="history">
+    <strong x-show="history.length > 0">Video history:</strong>
+    <div id="history" x-show="history.length > 0">
       <template x-for="item in history" :key="item">
           <div x-text="item.title"
                @click="video_url = item.url; loadVideoFromInput()"
