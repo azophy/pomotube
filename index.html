@@ -246,6 +246,7 @@
       <template x-for="item in history" :key="item">
           <div x-text="item.title"
                @click="video_url = item.url; loadVideoFromInput()"
+               title="load this video"
           ></div>
       </template>
     </div>
@@ -261,6 +262,10 @@
   <p>After that, you paste it on the input box under the video player. Then you could just click the 'Play' button to start your 'Focus' session'. The timer is set to 25 minutes of 'Focus' session and 5 minutes of 'Break' session, and would alternate each session one after another. You could pause or reset the timer anytime.</p>
 
   <p>You could also turn the player into Fullscreen mode. In that mode, the player would fill the page, and left the timer toolbar above the player. If you wish to, you could also install this website as a PWA by clicking the 'Install this page' button on your browser's URL bar.</p>
+
+  <strong>Where do you store my video history?</strong>
+
+  <p>The history is stored locally on your browser, so we can't see it on our server. When you change browser or device, the history would be separated.</p>
 </div>
 
 <div id="footer" class="fullscreen-hide">
