@@ -1,6 +1,6 @@
 { 
-    "name":"FlowTube", 
-    "short_name":"FlowTube", 
+    "name":"PomoTube", 
+    "short_name":"PomoTube", 
     "start_url":"index.html", 
     "display":"standalone", 
     "background_color":"teal", 
