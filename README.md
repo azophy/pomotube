@@ -10,11 +10,15 @@ Icons by [Google's Material Icons](https://material.io/resources/icons/)
 Notification sound by [NotificationSounds.com](https://notificationsounds.com)
 
 ## Todo
-- [x] pause youtube on break
 - [ ] service worker notify on update available
 - [ ] basic youtube suggestion list
-- [ ] video history?
+- [x] pause youtube on break
+- [x] video history?
 - [x] fix icon size for manifest
+
+## Current Color Scheme
+
+https://coolors.co/008080-227b7e-36878a-489295-599c9f
 
 ## References
 - https://github.com/alpinejs/alpine/
