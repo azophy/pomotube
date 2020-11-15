@@ -282,7 +282,19 @@ function loadVideoByUrl(url, autoplay) {
   if (player == undefined) return false;
   if (autoplay == undefined) autoplay=false;
 
-  var params = new URL(url).searchParams;
+  try {
+    var params = new URL(url).searchParams;
+  } catch (e) {
+    console.log(e);
+
+    if (e instanceof TypeError) {
+      alert('Error: wrong url format. Please make sure the url is right (including http/https)');
+    } else {
+      alert('Error: ' + e);
+    }
+
+    return false;
+  }
   var playlist_data;
 
   //playlist
