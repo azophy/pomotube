@@ -92,6 +92,20 @@
 #player-frame { 
   flex: 1 1 auto;
 }
+#history {
+  padding:0;
+  background: #eee;
+  border:3px solid #aaa;
+  text-align: left;
+}
+
+#history div {
+  border-top: 2px solid #ccc;
+  cursor: pointer;
+  overflow-x: hidden;
+  padding:2px;
+  white-space: nowrap;
+}
 /* ===== FULLSCREEN SPECIFIC SETTINGS ===== */
 .non-fullscreen-hide { display: none }
 .fullscreen .non-fullscreen-hide { display: block }
@@ -218,7 +232,20 @@
       <input type="text" id="video_url" x-model="video_url" width="60%"/>
     </p>
 
-    <button @click="loadVideoFromInput()">Apply</button>
+    <strong>
+      Video history:
+    </strong>
+    <div id="history">
+      <template x-for="item in history" :key="item">
+          <div x-text="item.title"
+               @click="video_url = item.url; loadVideoFromInput()"
+          ></div>
+      </template>
+    </div>
+
+    <p>
+      <button @click="loadVideoFromInput()">Apply</button>
+    </p>
   </div>
 </div>
 
@@ -282,6 +309,7 @@ function loadVideoByUrl(url, autoplay) {
   if (player == undefined) return false;
   if (autoplay == undefined) autoplay=false;
 
+  // url validation
   try {
     var params = new URL(url).searchParams;
   } catch (e) {
@@ -297,24 +325,23 @@ function loadVideoByUrl(url, autoplay) {
   }
   var playlist_data;
 
+  // only load if new url is different
+  if (player.getVideoUrl() == url) {
+    return false;
+  }
+
   //playlist
   if (url.indexOf('playlist') != -1) { 
-    var playlist_id = params.get('list');
-    if (player.getPlaylistId() != playlist_id) {
-      playlist_data = {
-        listType:'playlist',
-        list: playlist_id,
-      };
-    }
+    playlist_data = {
+      listType:'playlist',
+      list: params.get('list'),
+    };
   }
 
   //video
   else { 
-    var vid_id = params.get('v');
-    if (player.getPlaylistId() != vid_id) {
-      // load as playlist instead as single video so we could loop it
-      playlist_data = vid_id; 
-    }
+    // load as playlist instead as single video so we could loop it
+    playlist_data = params.get('v'); 
   }
 
   // actual playlist loading
@@ -383,6 +410,7 @@ function data() {
     video_url: 'https://www.youtube.com/watch?v=5yx6BWlEVcY', //ChillHop caffee
     start_text: '<i class="material-icons">play_arrow</i>',
     pause_text: '<i class="material-icons">pause</i>',
+    history: [],
 
     init() {
       this.timer = this.pomodoro_duration;
@@ -397,6 +425,9 @@ function data() {
 
       if (window.localStorage.getItem('video_url')) {
         this.video_url = window.localStorage.getItem('video_url');
+      }
+      if (window.localStorage.getItem('history')) {
+        this.history = JSON.parse(window.localStorage.getItem('history'));
       }
 
       loadVideoByUrl(this.video_url);
@@ -468,6 +499,19 @@ function data() {
 
         var autoplay = (this.stage == "Flow" && this.timer_action == "Pause");
         loadVideoByUrl(url, autoplay);
+
+        // remove previous value from history
+        var idx_old = this.history.findIndex(x => x.url == url)
+        if (idx_old != -1) this.history.splice(idx_old,1)
+
+        // append to history
+        this.history.unshift({
+          title: url,
+          url: url,
+          timestamp: new Date().getTime(),
+        });
+
+        window.localStorage.setItem('history', JSON.stringify(this.history));
     },
   };
 }
