@@ -1,9 +1,9 @@
-FlowTube
+PomoTube
 ========
 
-Simple pomodoro based timer with youtube player 
+Simple pomodoro timer with youtube player 
 
-![FlowTube Screenshot](images/screenshot.png?raw=true "FlowTube Screenshot")
+![PomoTube Screenshot](images/screenshot.png?raw=true "PomoTube Screenshot")
 
 Powered by [AlpineJS](https://github.com/alpinejs/alpine/)
 Icons by [Google's Material Icons](https://material.io/resources/icons/)
