@@ -559,6 +559,17 @@ function data() {
 
           window.localStorage.setItem('history', JSON.stringify(this.history));
         })
+        .catch(e => {
+          console.log(e);
+
+          this.history.unshift({
+            title: url,
+            url: url,
+            timestamp: new Date().getTime(),
+          });
+
+          window.localStorage.setItem('history', JSON.stringify(this.history));
+        });
     },
   };
 }
