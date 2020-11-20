@@ -111,6 +111,9 @@
 #history div:first-child {
   border-top: none;
 }
+
+#settings-duration { margin:10px; }
+#settings-duration input { width:20px; }
 /* ===== FULLSCREEN SPECIFIC SETTINGS ===== */
 .non-fullscreen-hide { display: none }
 .fullscreen .non-fullscreen-hide { display: block }
@@ -204,7 +207,7 @@
 <div id="player-area">
   <div id="timer-bar">
     <div class="wrapper">
-      <label for="stage-display">Session:</label> <span id="stage-display" x-text="stage" title="current session"></span>
+      <label for="session-display">Session:</label> <span id="session-display" x-text="session" title="current session"></span>
       <label for="round-display">Round:</label> <span id="round-display" x-text="round" title="current number of rounds"></span>
       <label for="timer-display">Timer:</label> <span id="timer-display" x-text="displayTimer()" title="time left"></span>
       <button id="btn-start" @click="toggleTimer()" :title="timer_action"
@@ -236,7 +239,7 @@
     <p>
       <label for="video_url">youtube video/playlist url</label>
       <input type="text" id="video_url" x-model="video_url" width="60%"/>
-      <button @click="loadVideoFromInput()">Apply</button>
+      <button @click="loadVideoFromInput()">Use this</button>
     </p>
 
     <strong x-show="history.length > 0">Video history:</strong>
@@ -247,6 +250,31 @@
                title="load this video"
           ></div>
       </template>
+    </div>
+
+    <div id="settings-duration">
+      <label>Focus Duration</label>
+      <input type="text" x-ref="focus_duration_min">:
+      <input type="text" x-ref="focus_duration_sec">
+      <label>Break Duration</label>
+      <input type="text" x-ref="break_duration_min">:
+      <input type="text" x-ref="break_duration_sec">
+      <br/>
+
+      <label>Long Break Duration</label>
+      <input type="text" x-ref="long_break_duration_min">:
+      <input type="text" x-ref="long_break_duration_sec">
+      <label>Long Break Cycle</label>
+      <input type="text" x-ref="long_break_cycle"> sessions
+      <br/>
+
+      <button @click="applySettings()"
+        :disabled="!(session == 'Focus' && timer_action == 'Start')" 
+        :title="(session == 'Focus' && timer_action == 'Start') 
+          ? 'Enable these settings'
+          : 'You could only enable these settings by resetting the timer'
+        "
+      >Apply</button>
     </div>
   </div>
 </div>
@@ -407,8 +435,10 @@ function data() {
   return { 
     pomodoro_duration: 25*60,
     break_duration: 5*60,
+    long_break_duration: 5*60,
+    long_break_cycle: 4,
     timer: 0,
-    stage: 'Focus',
+    session: 'Focus',
     round: 1,
     end_time: 0,
     counter: null,
@@ -435,6 +465,20 @@ function data() {
       if (window.localStorage.getItem('history')) {
         this.history = JSON.parse(window.localStorage.getItem('history'));
       }
+      if (window.localStorage.getItem('pomodoro_duration')) {
+        this.pomodoro_duration = window.localStorage.getItem('pomodoro_duration')
+      }
+      if (window.localStorage.getItem('break_duration')) {
+        this.break_duration = window.localStorage.getItem('break_duration')
+      }
+      if (window.localStorage.getItem('long_break_duration')) {
+        this.long_break_duration = window.localStorage.getItem('long_break_duration')
+      }
+      if (window.localStorage.getItem('long_break_cycle')) {
+        this.long_break_cycle = window.localStorage.getItem('long_break_cycle')
+      }
+
+      this.displaySettings()
 
       loadVideoByUrl(this.video_url);
     },
@@ -449,13 +493,13 @@ function data() {
 
       if (this.timer <= 0) {
         this.toggleTimer();
-        notify('stage ' + this.stage + ' round ' + this.round +' done');
+        notify('session ' + this.session + ' round ' + this.round +' done');
 
-        if (this.stage == 'Focus') {
-          this.stage = 'Break';
+        if (this.session == 'Focus') {
+          this.session = 'Break';
           this.timer = this.break_duration;
         } else {
-          this.stage = 'Focus';
+          this.session = 'Focus';
           this.timer = this.pomodoro_duration;
           this.round++;
         }
@@ -472,7 +516,7 @@ function data() {
         this.end_time = new Date().getTime() + this.timer*1000;
         this.counter = setInterval(() => {this.updateTimer();}, 100);
         this.timer_action = 'Pause'
-        if (this.stage == "Focus") {
+        if (this.session == "Focus") {
           player.playVideo();
         }
       }
@@ -485,7 +529,7 @@ function data() {
       }
       this.timer = this.pomodoro_duration;
       this.round = 1;
-      this.stage = 'Focus';
+      this.session = 'Focus';
       this.timer_action = 'Start'
     },
 
@@ -503,7 +547,7 @@ function data() {
         var url = this.video_url.trim();
         window.localStorage.setItem('video_url', url);
 
-        var autoplay = (this.stage == "Focus" && this.timer_action == "Pause");
+        var autoplay = (this.session == "Focus" && this.timer_action == "Pause");
         loadVideoByUrl(url, autoplay);
 
         // remove previous value from history
@@ -570,6 +614,33 @@ function data() {
 
           window.localStorage.setItem('history', JSON.stringify(this.history));
         });
+    },
+    displaySettings() {
+      this.$refs.focus_duration_min.value = Math.floor(this.pomodoro_duration/60)
+      this.$refs.focus_duration_sec.value = this.pomodoro_duration%60
+
+      this.$refs.break_duration_min.value = Math.floor(this.break_duration/60)
+      this.$refs.break_duration_sec.value = this.break_duration%60
+
+      this.$refs.long_break_duration_min.value = Math.floor(this.long_break_duration/60)
+      this.$refs.long_break_duration_sec.value = this.long_break_duration%60
+
+      this.$refs.long_break_cycle.value = this.long_break_cycle
+    },
+    applySettings() {
+      this.pomodoro_duration = Number(this.$refs.focus_duration_min.value) * 60 +
+                               Number(this.$refs.focus_duration_sec.value);
+      this.break_duration = Number(this.$refs.break_duration_min.value) * 60 +
+                            Number(this.$refs.break_duration_sec.value);
+      this.long_break_duration = Number(this.$refs.long_break_duration_min.value) * 60 +
+                                 Number(this.$refs.long_break_duration_sec.value);
+      this.long_break_cycle = Number(this.$refs.long_break_cycle.value);
+      this.resetTimer()
+
+      window.localStorage.setItem('pomodoro_duration', this.pomodoro_duration);
+      window.localStorage.setItem('break_duration', this.break_duration);
+      window.localStorage.setItem('long_break_duration', this.long_break_duration);
+      window.localStorage.setItem('long_break_cycle', this.long_break_cycle);
     },
   };
 }
