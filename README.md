@@ -5,9 +5,9 @@ Simple pomodoro timer with youtube player
 
 ![PomoTube Screenshot](images/screenshot.png?raw=true "PomoTube Screenshot")
 
-Powered by [AlpineJS](https://github.com/alpinejs/alpine/)
-Icons by [Google's Material Icons](https://material.io/resources/icons/)
-Notification sound by [NotificationSounds.com](https://notificationsounds.com)
+- Powered by [AlpineJS](https://github.com/alpinejs/alpine/)
+- Icons by [Google's Material Icons](https://material.io/resources/icons/)
+- Notification sound by [NotificationSounds.com](https://notificationsounds.com)
 
 ## Todo
 - [ ] service worker notify on update available
