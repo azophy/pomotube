@@ -507,17 +507,58 @@ function data() {
         loadVideoByUrl(url, autoplay);
 
         // remove previous value from history
-        var idx_old = this.history.findIndex(x => x.url == url)
-        if (idx_old != -1) this.history.splice(idx_old,1)
+        var old_item, title,
+            idx_old = this.history.findIndex(x => x.url == url)
+            
+        if (idx_old != -1) {
+          // clone old item before deleting
+          old_item = JSON.parse(JSON.stringify(this.history[idx_old]));
+          this.history.splice(idx_old,1)
+        }
+
+        // get video title
+        var promise,
+            base_api = 'https://youtube.googleapis.com/youtube/v3/',
+            api_key = 'AIzaSyAdiZBboIWG3nhLhsyzamfdHYPbs6tYNi8';
+
+        if (idx_old != -1 && old_item.title != old_item.url) {
+          promise = Promise.resolve(old_item.title)
+        } else {
+          var method, object_id, final_url;
+          var params = new URL(url).searchParams;
+
+          // playlist
+          if (url.indexOf('playlist') != -1) { 
+            object_id = params.get('list')
+            method = 'playlists'
+          }
+          //video
+          else { 
+            // load as playlist instead as single video so we could loop it
+            object_id = params.get('v'); 
+            method = 'videos'
+          }
+
+          final_url = base_api + method + 
+                      '?part=snippet&fields=items(id,snippet(title))&key=' 
+                      + api_key + '&id=' + object_id;
+
+          promise = fetch(final_url).then(r => r.json()).then(r => {
+            title = r.items[0].snippet.title;
+            return title;
+          })
+        }
 
         // append to history
-        this.history.unshift({
-          title: url,
-          url: url,
-          timestamp: new Date().getTime(),
-        });
+        promise.then((title) => {
+          this.history.unshift({
+            title: title,
+            url: url,
+            timestamp: new Date().getTime(),
+          });
 
-        window.localStorage.setItem('history', JSON.stringify(this.history));
+          window.localStorage.setItem('history', JSON.stringify(this.history));
+        })
     },
   };
 }
