@@ -11,14 +11,11 @@ Notification sound by [NotificationSounds.com](https://notificationsounds.com)
 
 ## Todo
 - [ ] service worker notify on update available
-- [ ] basic youtube suggestion list
 - [x] pause youtube on break
 - [x] video history?
 - [x] fix icon size for manifest
-
-## Current Color Scheme
-
-https://coolors.co/008080-227b7e-36878a-489295-599c9f
+- [x] long break feature
+- [x] duration settings
 
 ## References
 - https://github.com/alpinejs/alpine/
