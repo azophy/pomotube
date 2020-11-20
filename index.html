@@ -112,7 +112,7 @@
   border-top: none;
 }
 
-#settings-duration { margin:10px; }
+#settings-duration , #settings-duration button { margin:10px 0; }
 #settings-duration input { width:20px; }
 /* ===== FULLSCREEN SPECIFIC SETTINGS ===== */
 .non-fullscreen-hide { display: none }
@@ -275,6 +275,7 @@
           : 'You could only enable these settings by resetting the timer'
         "
       >Apply</button>
+      <button @click="resetSettings()" title="Reset to default settings">Reset</button>
     </div>
   </div>
 </div>
@@ -449,16 +450,6 @@ function data() {
     history: [],
 
     init() {
-      this.timer = this.pomodoro_duration;
-
-      if (Notification.permission != "granted") {
-        Notification.requestPermission().then(function (permission) {
-          if (permission != "granted") {
-            alert('sorry, but this app require notification capabilities enabled. please enable first before using');
-          }
-        });
-	    }
-
       if (window.localStorage.getItem('video_url')) {
         this.video_url = window.localStorage.getItem('video_url');
       }
@@ -479,6 +470,15 @@ function data() {
       }
 
       this.displaySettings()
+      this.timer = this.pomodoro_duration;
+
+      if (Notification.permission != "granted") {
+        Notification.requestPermission().then(function (permission) {
+          if (permission != "granted") {
+            alert('sorry, but this app require notification capabilities enabled. please enable first before using');
+          }
+        });
+	    }
 
       loadVideoByUrl(this.video_url);
     },
@@ -488,21 +488,29 @@ function data() {
       return  ( mm < 10 ? '0':'') + mm + ':' + (ss < 10 ? '0' : '') + ss;
     },
     updateTimer() {
-      var cur_time = new Date().getTime();
+      var msg, cur_time = new Date().getTime();
       this.timer = Math.floor((this.end_time - cur_time)/1000);
 
       if (this.timer <= 0) {
         this.toggleTimer();
-        notify('session ' + this.session + ' round ' + this.round +' done');
+        msg ='session ' + this.session + ' round ' + this.round + ' done';
 
         if (this.session == 'Focus') {
-          this.session = 'Break';
-          this.timer = this.break_duration;
+          if (this.round % this.long_break_cycle == 0) {
+            this.timer = this.long_break_duration;
+            this.session = 'Long Break';
+          } else {
+            this.timer = this.break_duration;
+            this.session = 'Break';
+          }
         } else {
           this.session = 'Focus';
           this.timer = this.pomodoro_duration;
           this.round++;
         }
+
+        msg += "\nsession " + this.session + ' started'
+        notify(msg)
         
 	      this.toggleTimer();
       }
@@ -636,11 +644,20 @@ function data() {
                                  Number(this.$refs.long_break_duration_sec.value);
       this.long_break_cycle = Number(this.$refs.long_break_cycle.value);
       this.resetTimer()
+      this.displaySettings()
 
       window.localStorage.setItem('pomodoro_duration', this.pomodoro_duration);
       window.localStorage.setItem('break_duration', this.break_duration);
       window.localStorage.setItem('long_break_duration', this.long_break_duration);
       window.localStorage.setItem('long_break_cycle', this.long_break_cycle);
+    },
+    resetSettings() {
+      this.pomodoro_duration = 1500
+      this.break_duration = 300
+      this.long_break_duration = 900
+      this.long_break_cycle = 4
+      this.resetTimer()
+      this.displaySettings()
     },
   };
 }
