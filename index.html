@@ -112,10 +112,18 @@
   border-top: none;
 }
 
-#settings-duration , #settings-duration button { margin:10px 0; }
+#settings-duration {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+#settings-duration , #settings-duration button { margin-top:10px; }
 #settings-duration input { width:20px; }
 
-#social-buttons { display:inline; vertical-align:middle; }
+#social-buttons { 
+  display:block; 
+  vertical-align:middle; 
+  margin-top:15px;
+}
 #social-buttons * { margin:auto; }
 /* ===== FULLSCREEN SPECIFIC SETTINGS ===== */
 .non-fullscreen-hide { display: none }
@@ -257,19 +265,26 @@
 
     <div id="settings-duration">
       <label>Focus Duration</label>
-      <input type="text" x-ref="focus_duration_min">:
-      <input type="text" x-ref="focus_duration_sec">
+      <div>
+        <input type="text" x-ref="focus_duration_min">:
+        <input type="text" x-ref="focus_duration_sec">
+      </div>
       <label>Break Duration</label>
-      <input type="text" x-ref="break_duration_min">:
-      <input type="text" x-ref="break_duration_sec">
-      <br/>
+      <div>
+        <input type="text" x-ref="break_duration_min">:
+        <input type="text" x-ref="break_duration_sec">
+      </div>
 
       <label>Long Break Duration</label>
-      <input type="text" x-ref="long_break_duration_min">:
-      <input type="text" x-ref="long_break_duration_sec">
+      <div>
+        <input type="text" x-ref="long_break_duration_min">:
+        <input type="text" x-ref="long_break_duration_sec">
+      </div>
       <label>Long Break Cycle</label>
-      <input type="text" x-ref="long_break_cycle"> rounds
-      <br/>
+      <div>
+        <input type="text" x-ref="long_break_cycle"> rounds
+      </div>
+    </div>
 
       <button @click="applySettings()"
         :disabled="!(session == 'Focus' && timer_action == 'Start')" 
@@ -279,7 +294,6 @@
         "
       >Apply</button>
       <button @click="resetSettings()" title="Reset to default settings">Reset</button>
-    </div>
   </div>
 </div><!-- end options -->
 
