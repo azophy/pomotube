@@ -472,6 +472,7 @@ function data() {
     start_text: '<i class="material-icons">play_arrow</i>',
     pause_text: '<i class="material-icons">pause</i>',
     history: [],
+    original_window_title:null,
 
     init() {
       if (window.localStorage.getItem('video_url')) {
@@ -514,6 +515,7 @@ function data() {
     updateTimer() {
       var msg, cur_time = new Date().getTime();
       this.timer = Math.floor((this.end_time - cur_time)/1000);
+      document.title = this.displayTimer() + ' - ' + this.session + ' Session';
 
       if (this.timer <= 0) {
         this.toggleTimer();
@@ -542,10 +544,12 @@ function data() {
     toggleTimer() {
       if (this.timer_action == 'Pause') {
         clearInterval(this.counter);
+        document.title = this.original_window_title;
         this.timer_action = 'Resume'
       	player.pauseVideo();
       } else {
         this.end_time = new Date().getTime() + this.timer*1000;
+        this.original_window_title = document.title;
         this.counter = setInterval(() => {this.updateTimer();}, 100);
         this.timer_action = 'Pause'
         if (this.session == "Focus") {
