@@ -1,0 +1,329 @@
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+body {
+  padding: 3rem 0;
+  font-size: 1.6rem;
+  background: #eee;
+  color: #222;
+  font-family: 'Manrope', 'Helvetica Neue', 'Arial', 'sans-serif';
+  overflow-x: hidden;
+}
+
+.tl-art {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -10;
+  background-image: url("../assets/imgs/Top left abstract.svg");
+  background-position: top left;
+  background-repeat: no-repeat;
+  background-size: contain;
+  width: 100vw;
+  height: 40vh;
+}
+
+.player-bg {
+  position: absolute;
+  background: url("../assets/imgs/Player Abstract.svg") no-repeat;
+  background-size: 100% 100%;
+  width: 100vw;
+  height: 70vh;
+  z-index: -10;
+  top: 20vh;
+}
+
+.bglines {
+  position: absolute;
+  top: 120vh;
+  right: 0;
+  z-index: -10;
+  background: url("../assets/imgs/Bg-lines.svg") no-repeat;
+  background-size: contain;
+  background-position: 100% 100%;
+  width: 100vw;
+  height: 100vh;
+}
+
+header {
+  padding: 1rem;
+  text-align: center;
+}
+
+header h1 {
+  font-size: 3rem;
+  font-weight: 800;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+}
+
+header p {
+  font-weight: 500;
+  color: #777;
+}
+
+main {
+  margin: auto;
+  max-width: 900px;
+  padding: 2rem;
+}
+
+.stats .timer {
+  font-size: 7rem;
+  font-weight: 100;
+  color: #222;
+  background: rgba(255, 255, 255, 0.5);
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  margin: auto;
+  padding: 2rem;
+  -webkit-backdrop-filter: blur(5px);
+          backdrop-filter: blur(5px);
+  border-radius: 5px;
+}
+
+.stats .timer span {
+  font-weight: 800;
+}
+
+.stats .info {
+  margin-top: 1rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  font-weight: 900;
+  color: #222;
+}
+
+.stats .info span {
+  color: #444;
+  font-weight: 500;
+}
+
+.player {
+  margin: auto;
+  max-width: 900px;
+}
+
+.player iframe {
+  display: block;
+  margin: auto;
+  width: 100%;
+  height: calc(100% - 38px);
+  border-radius: 10px 10px 0 0;
+}
+
+.player__controls {
+  margin: auto;
+  background: #111;
+  padding: 1rem;
+  border-radius: 0 0 10px 10px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+}
+
+.player__controls img {
+  display: block;
+}
+
+form {
+  max-width: 400px;
+  margin: auto;
+  margin-top: 4rem;
+}
+
+form .row {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+form .row label {
+  font-weight: 800;
+}
+
+form .row input {
+  width: 40px;
+}
+
+form .row input:nth-of-type(1) {
+  margin-left: auto;
+}
+
+form .row span {
+  font-weight: 800;
+  margin: 5px;
+}
+
+form .row p {
+  font-weight: 600;
+  font-size: 1.6rem;
+  margin-left: 5px;
+}
+
+form .row:nth-of-type(3) {
+  margin-top: 2rem;
+}
+
+form .row button:nth-of-type(2) {
+  background: #777;
+  margin-left: 10px;
+}
+
+form label {
+  margin: 2rem 0;
+  display: block;
+  font-weight: 800;
+  font-size: 14px;
+  color: #000;
+}
+
+form label input {
+  width: 7rem;
+  text-align: center;
+  font-weight: 800;
+}
+
+form input {
+  border: 2px solid #777;
+  padding: 8px;
+  border-radius: 5px;
+  font-size: 1.8rem;
+}
+
+form input:focus {
+  outline: none;
+  border: 2px solid #444;
+}
+
+form input#link {
+  margin-top: 5px;
+  display: block;
+  width: 100%;
+}
+
+form input#link::-webkit-input-placeholder {
+  font-weight: 600;
+  font-size: 1.4rem;
+  color: rgba(0, 0, 0, 0.3);
+}
+
+form input#link:-ms-input-placeholder {
+  font-weight: 600;
+  font-size: 1.4rem;
+  color: rgba(0, 0, 0, 0.3);
+}
+
+form input#link::-ms-input-placeholder {
+  font-weight: 600;
+  font-size: 1.4rem;
+  color: rgba(0, 0, 0, 0.3);
+}
+
+form input#link::placeholder {
+  font-weight: 600;
+  font-size: 1.4rem;
+  color: rgba(0, 0, 0, 0.3);
+}
+
+form button {
+  font-size: 1.8rem;
+  padding: 5px 10px;
+  font-weight: 700;
+  border: none;
+  outline: none;
+  color: white;
+  border-radius: 5px;
+  -webkit-box-shadow: 0 5px 10px rgba(15, 24, 255, 0.3);
+          box-shadow: 0 5px 10px rgba(15, 24, 255, 0.3);
+  background: -webkit-gradient(linear, left top, right bottom, from(#05D2FF), to(#0F18FF));
+  background: linear-gradient(to bottom right, #05D2FF, #0F18FF);
+}
+
+form button#use-link {
+  display: block;
+  margin-top: 1rem;
+}
+
+section {
+  margin: 80px auto 40px;
+  max-width: 900px;
+  background: rgba(255, 255, 255, 0.3);
+  padding: 2vw;
+  -webkit-backdrop-filter: blur(5px);
+          backdrop-filter: blur(5px);
+  border-radius: 10px;
+  -webkit-box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+          box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
+
+section h1 {
+  font-size: 2rem;
+}
+
+section h1:nth-of-type(2) {
+  margin-top: 3rem;
+}
+
+section p {
+  margin: 1rem 0;
+}
+
+footer {
+  padding: 2rem;
+  margin: auto;
+  max-width: 900px;
+}
+
+footer hr {
+  outline: none;
+  background: -webkit-gradient(linear, left top, right bottom, from(#05D2FF), to(#0F18FF));
+  background: linear-gradient(to bottom right, #05D2FF, #0F18FF);
+  border: 3px solid linear-gradient(to bottom right, #05D2FF, #0F18FF);
+}
+
+footer p {
+  text-align: center;
+}
+
+footer a {
+  display: inline-block;
+  font-weight: 800;
+  background: -webkit-gradient(linear, left top, right bottom, from(#05D2FF), to(#0F18FF));
+  background: linear-gradient(to bottom right, #05D2FF, #0F18FF);
+  outline: none;
+  text-decoration: none;
+  color: #222;
+}
+
+@supports (-webkit-background-clip: text) {
+  footer a {
+    color: transparent;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+}
+
+footer a:hover {
+  -webkit-transform: scale(1.05);
+          transform: scale(1.05);
+  margin: 0 5px 0;
+}
+/*# sourceMappingURL=main.css.map */

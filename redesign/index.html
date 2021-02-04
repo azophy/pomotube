@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>PomoTube | Productivity Timer with Youtube Player</title>
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700;800&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="./css/main.css" />
+    </head>
+
+    <body>
+        <div class="tl-art"></div>
+        <div class="player-bg"></div>
+        <div class="bglines"></div>
+
+        <header>
+            <h1>PomoTube</h1>
+            <p>Pomodoro timer with Youtube Player</p>
+        </header>
+        <main>
+            <div class="stats">
+                <div class="timer">
+                    <p>
+                        25<span>:</span>00
+                    </p>
+                </div>
+                <div class="info">
+                    <p><span>Session : </span> Focus</p>
+                    <p><span>Round : </span> 1</p>
+                </div>
+            </div>
+            <div class="player">
+                    <iframe frameborder="0" type="text/html"
+                        src="https://www.youtube.com/embed/E3QiD99jPAg?autoplay=0&fs=0&iv_load_policy=3&showinfo=0&rel=0&cc_load_policy=0&start=0&end=0">
+                    </iframe>
+                    <div class="player__controls">
+                        <div class="play">
+                            <img src="./assets/icons/Play Icon.svg" alt="">
+                        </div>
+                        <div class="repeat">
+                            <img src="./assets/icons/Repeat icon.svg" alt="">
+                        </div>
+                        <div class="fullscreen">
+                            <img src="./assets/icons/Full Screen Icon.svg" alt="">
+                        </div>
+                    </div>
+            </div>
+
+            <form>
+                <label for="link">Youtube Video / Playlist URL :</label>
+                <input type="text" id="link" placeholder="Paste your link here">
+                <button id="use-link">Use This</button>
+                
+                <div class="row">
+                    <label>Focus Duration : </label>
+                    <input type="number" min="0" max="59">
+                    <span>:</span>
+                    <input type="number" min="0" max="59">
+                </div>
+                <div class="row">
+                    <label>Break Duration : </label>
+                    <input type="number" min="0" max="59"> 
+                    <span>:</span>
+                    <input type="number" min="0" max="59">
+                </div>
+                <div class="row">
+                    <label>Long Break Duration : </label>
+                    <input type="number" min='0' max="59">
+                    <span>:</span>
+                    <input type="number" min='0' max="59">
+                </div>
+                <div class="row">
+                    <label>Long Break Cycle : </label>
+                    <input type="number" min='0' max="59">
+                    <p>cycles</p>
+                </div>
+
+                <div class="row">
+                    <button>Apply</button> <button>Reset</button>
+                </div>
+            </form>
+
+            <section>
+                <h1>How to use this webpage ?</h1>
+                <p>First prepare a youtube url you would like to play. You could use a single video or a playlist. The player would loop the video/playlist when it ends.</p>
+                <p>After that, you paste it on the input box under the video player. Then you could just click the 'Play' button to start your 'Focus' session'. The timer is set to 25 minutes of 'Focus' session and 5 minutes of 'Break' session, and would alternate each session one after another. You could pause or reset the timer anytime.</p>
+                <p>You could also turn the player into Fullscreen mode. In that mode, the player would fill the page, and left the timer toolbar above the player. If you wish to, you could also install this website as a PWA by clicking the 'Install this page' button on your browser's URL bar.</p>
+                <h1>Where do you store my video history?</h1>
+                <p>The history is stored locally on your browser, so we can't see it on our server. When you change browser or device, the history would be separated.</p>
+            </section>
+        </main>
+
+        <footer>
+            <p>Made by <a href="https://abdurrahman.adianto.id/">Abdurrahman Shofy Adianto</a> 2020.</p>
+            <p>Released under <a href="https://www.gnu.org/licenses/#AGPL">GNU AGPLv3</a>.</p>
+            <hr>
+            <p>Redesigned by <a href="https://github.com/SaitejaVemula">Saiteja Vemula</a> </p>
+        </footer>
+
+        <script src="./js/app.js"></script>
+    </body>
+</html>
